@@ -1,23 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Taskify.Core.Models;
 
 namespace Taskify.DataAccess.Entities
 {
-    public class Project
+    public class ProjectEntity
     {
-        public Project()
+        public ProjectEntity()
         {
-            Issue = new HashSet<Issue>();
+            Issue = new HashSet<IssueEntity>();
         }
         public int Id { get; set; }
 
         [Required]
-        [StringLength(Taskify.Core.Models.Project.MAX_NAME_LENGTH)]
+        [StringLength(Project.MAX_NAME_LENGTH)]
         public string Name { get; set; }
 
         public string? Description { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
-        public virtual ICollection<Issue> Issue { get; set;}
+        public virtual ICollection<IssueEntity> Issue { get; set;}
     }
 }

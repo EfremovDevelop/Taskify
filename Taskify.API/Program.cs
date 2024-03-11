@@ -1,4 +1,7 @@
 using System.Text.Json.Serialization;
+using Taskify.Application.Services;
+using Taskify.Core.Interfaces;
+using Taskify.Core.Models;
 using Taskify.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,9 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IRepository<Project>, ProjectRepository>();
 
 var app = builder.Build();
 
