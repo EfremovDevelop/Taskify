@@ -5,7 +5,7 @@ namespace Taskify.DataAccess.Entities
 {
     public class IssueEntity
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [StringLength(Issue.MAX_NAME_LENGTH)]
         public string Name { get; set; }
@@ -14,7 +14,7 @@ namespace Taskify.DataAccess.Entities
 
         public float TimeSpent { get; set; } = 0;
 
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
         public StatusEntity Status { get; set; } = StatusEntity.New;
 

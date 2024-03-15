@@ -12,7 +12,7 @@ using Taskify.DataAccess;
 namespace Taskify.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240310201137_init")]
+    [Migration("20240314191544_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,13 +25,11 @@ namespace Taskify.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Taskify.DataAccess.Entities.Issue", b =>
+            modelBuilder.Entity("Taskify.DataAccess.Entities.IssueEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -45,8 +43,8 @@ namespace Taskify.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
 
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
@@ -64,13 +62,11 @@ namespace Taskify.DataAccess.Migrations
                     b.ToTable("Issue");
                 });
 
-            modelBuilder.Entity("Taskify.DataAccess.Entities.Project", b =>
+            modelBuilder.Entity("Taskify.DataAccess.Entities.ProjectEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -88,9 +84,9 @@ namespace Taskify.DataAccess.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("Taskify.DataAccess.Entities.Issue", b =>
+            modelBuilder.Entity("Taskify.DataAccess.Entities.IssueEntity", b =>
                 {
-                    b.HasOne("Taskify.DataAccess.Entities.Project", "Project")
+                    b.HasOne("Taskify.DataAccess.Entities.ProjectEntity", "Project")
                         .WithMany("Issue")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -99,7 +95,7 @@ namespace Taskify.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Taskify.DataAccess.Entities.Project", b =>
+            modelBuilder.Entity("Taskify.DataAccess.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Issue");
                 });

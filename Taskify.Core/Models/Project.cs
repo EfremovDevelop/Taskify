@@ -4,7 +4,7 @@
     {
         public const int MAX_NAME_LENGTH = 100;
 
-        private Project(int id, string name, string description, DateTime createdDate) 
+        private Project(Guid id, string name, string description, DateTime createdDate) 
         {
             Id = id;
             Name = name;
@@ -12,12 +12,12 @@
             CreatedDate = createdDate;
         }
 
-        public int Id { get; }
+        public Guid Id { get; }
         public string Name { get; } = string.Empty;
         public string Description { get; } = string.Empty;
         public DateTime CreatedDate { get; }
 
-        public static (Project Project, string Error) Create(int id, string Name, string Description, DateTime CreatedDate)
+        public static (Project Project, string Error) Create(Guid id, string Name, string Description, DateTime CreatedDate)
         {
             string error = string.Empty;
             if (Name.Length >= MAX_NAME_LENGTH)

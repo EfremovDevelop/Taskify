@@ -3,11 +3,11 @@ using Taskify.Core.Models;
 
 namespace Taskify.Application.Services
 {
-    public class ProjectService : IProjectService
+    public class ProjectsService : IProjectsService
     {
         private readonly IRepository<Project> _repository;
 
-        public ProjectService(IRepository<Project> repository)
+        public ProjectsService(IRepository<Project> repository)
         {
             _repository = repository;
         }
@@ -17,22 +17,22 @@ namespace Taskify.Application.Services
             return await _repository.GetList();
         }
 
-        public async Task<Project> GetProject(int id)
+        public async Task<Project> GetProject(Guid id)
         {
             return await _repository.GetItem(id);
         }
 
-        public async Task<int> CreateProject(Project project)
+        public async Task<Guid> CreateProject(Project project)
         {
             return await _repository.Create(project);
         }
 
-        public async Task<int> UpdateProject(Project project)
+        public async Task<Guid> UpdateProject(Project project)
         {
             return await _repository.Update(project);
         }
 
-        public async Task<int> DeleteProject(int id)
+        public async Task<Guid> DeleteProject(Guid id)
         {
             return await _repository.Delete(id);
         }

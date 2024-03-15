@@ -4,10 +4,10 @@
     {
         Task<List<T>> GetList();
 
-        Task<T> GetItem(int id);
+        Task<T> GetItem(Guid id);
 
-        Task<int> Create(T item);
-        Task<int> Update(T item);
-        Task<int> Delete(int id);
+        Task<Guid> Create(T item);
+        Task<Guid> Update(T item);
+        Task<Guid> Delete(Guid id);
     }
 }

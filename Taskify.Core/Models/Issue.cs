@@ -3,7 +3,7 @@
     public class Issue
     {
         public const int MAX_NAME_LENGTH = 100;
-        private Issue(int id, string name, string description, float timeSpent, int projectId,
+        private Issue(Guid id, string name, string description, float timeSpent, int projectId,
             Status status, DateTime createdDate, DateTime updateDate) 
         {
             Id = id;
@@ -16,7 +16,7 @@
             UpdatedDate = updateDate;
         }
 
-        public int Id { get; }
+        public Guid Id { get; }
         public string Name { get; }
         public string Description { get; } = string.Empty;
         public float TimeSpent { get; } = 0;
@@ -26,7 +26,7 @@
         public DateTime CreatedDate { get; }
         public DateTime UpdatedDate { get; }
 
-        public static (Issue issue, string error) Create(int id, string name, string description, float timeSpent, int projectId,
+        public static (Issue issue, string error) Create(Guid id, string name, string description, float timeSpent, int projectId,
             Status status, DateTime createdDate, DateTime updateDate)
         {
             string error = string.Empty;

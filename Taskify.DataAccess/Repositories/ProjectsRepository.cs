@@ -7,16 +7,16 @@ using Taskify.DataAccess.Entities;
 
 namespace Taskify.Core.Interfaces
 {
-    public class ProjectRepository : IRepository<Project>
+    public class ProjectsRepository : IRepository<Project>
     {
         //protected readonly ILogger _logger;
         private readonly DataContext _context;
-        public ProjectRepository(DataContext context)
+        public ProjectsRepository(DataContext context)
         { 
             _context = context;
         }
 
-        public async Task<int> Create(Project item)
+        public async Task<Guid> Create(Project item)
         {
             var projectEntity = new ProjectEntity
             {
@@ -30,12 +30,12 @@ namespace Taskify.Core.Interfaces
             return projectEntity.Id;
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<Guid> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Project> GetItem(int id)
+        public async Task<Project> GetItem(Guid id)
         {
             var projectEntity = await _context.Project.FindAsync(id);
             if (projectEntity == null)
@@ -62,7 +62,7 @@ namespace Taskify.Core.Interfaces
             return projects;
         }
 
-        public async Task<int> Update(Project item)
+        public async Task<Guid> Update(Project item)
         {
             await _context.Project
                 .Where(p => p.Id == item.Id)

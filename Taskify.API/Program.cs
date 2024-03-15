@@ -3,6 +3,7 @@ using Taskify.Application.Services;
 using Taskify.Core.Interfaces;
 using Taskify.Core.Models;
 using Taskify.DataAccess;
+using Taskify.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,19 +16,19 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IRepository<Project>, ProjectRepository>();
+builder.Services.AddScoped<IProjectsService, ProjectsService>();
+builder.Services.AddScoped<IRepository<Project>, ProjectsRepository>();
 
 var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dataContext =
-//   scope.ServiceProvider.GetRequiredService<DataContext>();
-//    await DataContextSeed.SeedAsync(dataContext);
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext =
+   scope.ServiceProvider.GetRequiredService<DataContext>();
+    await DataContextSeed.SeedAsync(dataContext);
+}
 
 
 // Configure the HTTP request pipeline.

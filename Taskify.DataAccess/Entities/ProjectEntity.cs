@@ -9,7 +9,7 @@ namespace Taskify.DataAccess.Entities
         {
             Issue = new HashSet<IssueEntity>();
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(Project.MAX_NAME_LENGTH)]
