@@ -33,6 +33,8 @@ namespace Taskify.DataAccess.Data
                     context.Project.Add(p);
                 }
                 await context.SaveChangesAsync();
+
+
             }
             catch
             {
