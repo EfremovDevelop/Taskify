@@ -4,7 +4,7 @@
     {
         public const int MAX_NAME_LENGTH = 100;
         private Issue(Guid id, string name, string description, float timeSpent, Guid projectId,
-            Status status, DateTime createdDate, DateTime updateDate, int pathId) 
+            Status status, DateTime createdDate, DateTime updateDate, int refId) 
         {
             Id = id;
             Name = name;
@@ -14,7 +14,7 @@
             Status = status;
             CreatedDate = createdDate;
             UpdatedDate = updateDate;
-            PathId = pathId;
+            RefId = refId;
         }
 
         public Guid Id { get; }
@@ -23,7 +23,7 @@
         public float TimeSpent { get; } = 0;
         public Guid ProjectId { get; }
         public Status Status { get; }
-        public int PathId { get; }
+        public int RefId { get; }
 
         public DateTime CreatedDate { get; }
         public DateTime UpdatedDate { get; }

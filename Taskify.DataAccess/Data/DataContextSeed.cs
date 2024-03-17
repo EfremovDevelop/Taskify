@@ -34,7 +34,48 @@ namespace Taskify.DataAccess.Data
                 }
                 await context.SaveChangesAsync();
 
-
+                int cnt = 1;
+                foreach (ProjectEntity p in projects)
+                {
+                    var issues = new IssueEntity[]
+                    {
+                        new IssueEntity{
+                            Name = p.Name+" Issue" + cnt.ToString(),
+                            CreatedDate = DateTime.Now,
+                            Description = "qwerty",
+                            TimeSpent = 0,
+                            Status = StatusEntity.New,
+                            UpdatedDate = DateTime.Now,
+                            RefId = 1,
+                            ProjectId = p.Id
+                        },
+                        new IssueEntity{
+                            Name = p.Name+" Issue" + (cnt+1).ToString(),
+                            CreatedDate = DateTime.Now,
+                            Description = "qwerty",
+                            TimeSpent = 0,
+                            Status = StatusEntity.New,
+                            UpdatedDate = DateTime.Now,
+                            RefId = 2,
+                            ProjectId = p.Id
+                        },
+                        new IssueEntity{
+                            Name = p.Name+" Issue" + (cnt+2).ToString(),
+                            CreatedDate = DateTime.Now,
+                            Description = "qwerty",
+                            TimeSpent = 0,
+                            Status = StatusEntity.New,
+                            UpdatedDate = DateTime.Now,
+                            RefId = 3,
+                            ProjectId = p.Id
+                        }
+                    };
+                    foreach (IssueEntity i in issues)
+                    {
+                        context.Issue.Add(i);
+                    }
+                    await context.SaveChangesAsync();
+                }
             }
             catch
             {

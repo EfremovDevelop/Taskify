@@ -1,12 +1,13 @@
-﻿using Taskify.Core.Interfaces;
+﻿using Taskify.Core.Interfaces.Repositories;
+using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 
 namespace Taskify.Application.Services
 {
-	public class IssuesService : IIssueService
+    public class IssuesService : IIssueService
 	{
-        private readonly IRepository<Issue> _issuesRepository;
-		public IssuesService(IRepository<Issue> issueRepository)
+        private readonly IIssuesRepository _issuesRepository;
+		public IssuesService(IIssuesRepository issueRepository)
 		{
             _issuesRepository = issueRepository;
 		}
@@ -34,6 +35,11 @@ namespace Taskify.Application.Services
         public async Task<Guid> UpdateIssue(Issue issue)
         {
             return await _issuesRepository.Update(issue);
+        }
+
+        public async Task<int> GetMaxRefId(Guid projectId)
+        {
+            return await _issuesRepository.GetMaxRefId(projectId);
         }
     }
 }

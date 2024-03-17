@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Models;
 using Taskify.DataAccess;
 using Taskify.DataAccess.Entities;

@@ -1,4 +1,5 @@
-﻿using Taskify.Core.Interfaces;
+﻿using Taskify.Core.Interfaces.Repositories;
+using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 
 namespace Taskify.Application.Services

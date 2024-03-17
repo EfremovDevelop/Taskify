@@ -1,6 +1,6 @@
 ﻿using Taskify.Core.Models;
 
-namespace Taskify.Core.Interfaces
+namespace Taskify.Core.Interfaces.Services
 {
     public interface IProjectsService
     {

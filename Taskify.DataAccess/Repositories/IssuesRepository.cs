@@ -1,12 +1,13 @@
-﻿using System;
-using Taskify.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Models;
 using Taskify.DataAccess.Entities;
 
 namespace Taskify.DataAccess.Repositories
 {
-	public class IssuesRepository : IRepository<Issue>
-	{
+    public class IssuesRepository : IIssuesRepository
+    {
         private readonly DataContext _context;
 		public IssuesRepository(DataContext context)
 		{
@@ -25,7 +26,7 @@ namespace Taskify.DataAccess.Repositories
                 TimeSpent = item.TimeSpent,
                 Status = (StatusEntity)item.Status,
                 ProjectId = item.ProjectId,
-                PathId = item.PathId
+                RefId = item.RefId
             };
             await _context.Issue.AddAsync(issueEntity);
             await _context.SaveChangesAsync();
@@ -45,6 +46,15 @@ namespace Taskify.DataAccess.Repositories
         public async Task<List<Issue>> GetList()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<int> GetMaxRefId(Guid projectId)
+        {
+            var issuesByProject = await _context.Issue
+                .Where(i => i.ProjectId == projectId).ToListAsync();
+
+            var maxRefId = issuesByProject.Max(i => (int?)i.RefId) ?? 0;
+            return maxRefId;
         }
 
         public async Task<Guid> Update(Issue item)

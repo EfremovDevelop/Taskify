@@ -22,7 +22,7 @@ namespace Taskify.DataAccess.Entities
 
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
-        public int PathId { get; set; }
+        public int RefId { get; set; }
 
         public virtual ProjectEntity Project { get; set; }
     }

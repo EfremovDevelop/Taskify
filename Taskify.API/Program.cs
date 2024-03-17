@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Taskify.Application.Services;
 using Taskify.Core.Interfaces;
+using Taskify.Core.Interfaces.Repositories;
+using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 using Taskify.DataAccess;
 using Taskify.DataAccess.Data;
