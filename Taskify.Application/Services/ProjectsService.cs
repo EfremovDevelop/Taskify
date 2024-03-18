@@ -6,9 +6,9 @@ namespace Taskify.Application.Services
 {
     public class ProjectsService : IProjectsService
     {
-        private readonly IRepository<Project> _repository;
+        private readonly IProjectsRepository _repository;
 
-        public ProjectsService(IRepository<Project> repository)
+        public ProjectsService(IProjectsRepository repository)
         {
             _repository = repository;
         }

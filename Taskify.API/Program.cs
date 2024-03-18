@@ -3,9 +3,9 @@ using Taskify.Application.Services;
 using Taskify.Core.Interfaces;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Interfaces.Services;
-using Taskify.Core.Models;
 using Taskify.DataAccess;
 using Taskify.DataAccess.Data;
+using Taskify.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<IRepository<Project>, ProjectsRepository>();
+builder.Services.AddScoped<IIssuesService, IssuesService>();
+builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
+builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 
 var app = builder.Build();
 

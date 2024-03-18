@@ -4,6 +4,6 @@ namespace Taskify.API.Contracts
 {
 	public record IssuesResponse(
         string Name, string Description, float TimeSpent,
-            Status Status, DateTime CreatedDate, DateTime UpdateDate, int RefId);
+            string Status, DateTime CreatedDate, DateTime UpdateDate, int RefId);
 }
 

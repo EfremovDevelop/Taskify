@@ -28,8 +28,8 @@
         public DateTime CreatedDate { get; }
         public DateTime UpdatedDate { get; }
 
-        public static (Issue issue, string error) Create(Guid id, string name, string description, float timeSpent, Guid projectId,
-            Status status, DateTime createdDate, DateTime updateDate, int pathId)
+        public static (Issue Issue, string Error) Create(Guid id, string name, string description, float timeSpent, Guid projectId,
+            Status status, DateTime createdDate, DateTime updateDate, int RefId)
         {
             string error = string.Empty;
             if (string.IsNullOrEmpty(name))
@@ -39,7 +39,7 @@
             else if (timeSpent < 0)
                 error = "Error. TimeSpent can not be < 0";
 
-            Issue issue = new Issue(id, name, description, timeSpent, projectId, status, createdDate, updateDate, pathId);
+            Issue issue = new Issue(id, name, description, timeSpent, projectId, status, createdDate, updateDate, RefId);
 
             return (issue, error);
         }

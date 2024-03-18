@@ -8,7 +8,7 @@ using Taskify.DataAccess.Entities;
 
 namespace Taskify.Core.Interfaces
 {
-    public class ProjectsRepository : IRepository<Project>
+    public class ProjectsRepository : IProjectsRepository
     {
         //protected readonly ILogger _logger;
         private readonly DataContext _context;

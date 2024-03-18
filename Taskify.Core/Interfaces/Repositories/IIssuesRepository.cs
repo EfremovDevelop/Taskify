@@ -4,13 +4,13 @@ namespace Taskify.Core.Interfaces.Repositories
 {
     public interface IIssuesRepository
     {
-        Task<List<Issue>> GetList();
-
-        Task<Issue> GetItem(Guid id);
+        Task<Issue> GetItem(Guid projectId, Guid id);
+        Task<List<Issue>> GetList(Guid projectId);
 
         Task<Guid> Create(Issue item);
         Task<Guid> Update(Issue item);
-        Task<Guid> Delete(Guid id);
+        Task<Guid> Delete(Guid projectId, Guid id);
+
         Task<int> GetMaxRefId(Guid projectId);
     }
 }

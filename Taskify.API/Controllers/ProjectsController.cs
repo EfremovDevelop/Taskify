@@ -5,7 +5,7 @@ using Taskify.Core.Models;
 
 namespace Taskify.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/projects")]
     [ApiController]
     public class ProjectsController : ControllerBase
     {
