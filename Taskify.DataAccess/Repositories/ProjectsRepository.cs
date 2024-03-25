@@ -33,7 +33,10 @@ namespace Taskify.Core.Interfaces
 
         public async Task<Guid> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            await _context.Project
+                .Where(p => p.Id == id)
+                .ExecuteDeleteAsync();
+            return id;
         }
 
         public async Task<Project> GetItem(Guid id)
@@ -63,13 +66,26 @@ namespace Taskify.Core.Interfaces
             return projects;
         }
 
+        public async Task<List<Issue>> GetProjectIssues(Guid projectId)
+        {
+            var issueEntitiesByProject = await _context.Issue
+                .Where(i => i.ProjectId == projectId).ToListAsync();
+
+            var issuesByProject = issueEntitiesByProject
+                .Select(i => Issue.Create(i.Id, i.Name, i.Description,
+                i.TimeSpent, i.ProjectId, (Status)i.Status, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
+                .ToList();
+
+            return issuesByProject;
+        }
+
         public async Task<Guid> Update(Project item)
         {
             await _context.Project
                 .Where(p => p.Id == item.Id)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(p => p.Name, p => item.Name)
-                    .SetProperty(p => p.Description, p => item.Name));
+                    .SetProperty(p => p.Description, p => item.Description));
 
             return item.Id;
         }

@@ -17,14 +17,14 @@ namespace Taskify.Application.Services
             return await _issuesRepository.Create(issue);
         }
 
-        public async Task<Guid> DeleteIssue(Guid projectId, Guid id)
+        public async Task<Guid> DeleteIssue(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Issue> GetIssue(Guid projectId, Guid id)
+        public async Task<Issue> GetIssue(Guid id)
         {
-            return await _issuesRepository.GetItem(projectId, id);
+            return await _issuesRepository.GetItem(id);
         }
 
         public async Task<Guid> UpdateIssue(Issue issue)
@@ -37,9 +37,9 @@ namespace Taskify.Application.Services
             return await _issuesRepository.GetMaxRefId(projectId);
         }
 
-        public async Task<List<Issue>> GetIssues(Guid projectId)
+        public async Task<List<Issue>> GetAllIssues()
         {
-            return await _issuesRepository.GetList(projectId);
+            return await _issuesRepository.GetList();
         }
     }
 }

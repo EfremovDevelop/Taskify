@@ -33,12 +33,12 @@ namespace Taskify.DataAccess.Repositories
             return issueEntity.Id;
         }
 
-        public async Task<Guid> Delete(Guid projectId, Guid id)
+        public async Task<Guid> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Issue> GetItem(Guid projectId, Guid id)
+        public async Task<Issue> GetItem(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -52,17 +52,16 @@ namespace Taskify.DataAccess.Repositories
             return maxRefId;
         }
 
-        public async Task<List<Issue>> GetList(Guid projectId)
+        public async Task<List<Issue>> GetList()
         {
-            var issueEntitiesByProject = await _context.Issue
-                .Where(i => i.ProjectId == projectId).ToListAsync();
+            var issueEntities = await _context.Issue.ToListAsync();
 
-            var issuesByProject = issueEntitiesByProject
+            var issues = issueEntities
                 .Select(i => Issue.Create(i.Id, i.Name, i.Description,
                 i.TimeSpent, i.ProjectId, (Status)i.Status, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
                 .ToList();
 
-            return issuesByProject;
+            return issues;
 
         }
 

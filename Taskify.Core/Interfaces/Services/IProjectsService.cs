@@ -9,5 +9,7 @@ namespace Taskify.Core.Interfaces.Services
         Task<Guid> CreateProject(Project project);
         Task<Guid> DeleteProject(Guid id);
         Task<Guid> UpdateProject(Project project);
+
+        Task<List<Issue>> GetProjectIssues(Guid projectId);
     }
 }

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskify.Core", "Taskify.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskify.DataAccess", "Taskify.DataAccess\Taskify.DataAccess.csproj", "{8CE4434E-9056-492B-8779-AD1EA58447E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskify.Application", "Taskify.Application\Taskify.Application.csproj", "{552A4246-E7FE-4808-ADD2-64F1D291626D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskify.Application", "Taskify.Application\Taskify.Application.csproj", "{552A4246-E7FE-4808-ADD2-64F1D291626D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

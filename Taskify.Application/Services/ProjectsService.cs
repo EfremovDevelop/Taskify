@@ -37,5 +37,10 @@ namespace Taskify.Application.Services
         {
             return await _repository.Delete(id);
         }
+
+        public async Task<List<Issue>> GetProjectIssues(Guid projectId)
+        {
+            return await _repository.GetProjectIssues(projectId);
+        }
     }
 }
