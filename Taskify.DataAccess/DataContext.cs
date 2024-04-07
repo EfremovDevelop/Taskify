@@ -17,6 +17,8 @@ namespace Taskify.DataAccess
         }
         public virtual DbSet<ProjectEntity> Project { get; set; }
         public virtual DbSet<IssueEntity> Issue { get; set; }
+        public virtual DbSet<UserEntity> User { get; set; }
+        public virtual DbSet<ProjectUserEntity> ProjectUser { get; set; }
         protected override void OnModelCreating(ModelBuilder
        modelBuilder)
         {
@@ -29,6 +31,17 @@ namespace Taskify.DataAccess
             modelBuilder.Entity<IssueEntity>()
                 .Property(i => i.Status)
                 .HasColumnType("smallint");
+
+            modelBuilder.Entity<ProjectUserEntity>()
+            .HasKey(pu => new { pu.UserId, pu.ProjectId });
+            modelBuilder.Entity<ProjectUserEntity>()
+                .HasOne(pu => pu.User)
+                .WithMany(u => u.Projects)
+                .HasForeignKey(pu => pu.UserId);
+            modelBuilder.Entity<ProjectUserEntity>()
+                .HasOne(pu => pu.Project)
+                .WithMany(p => p.Users)
+                .HasForeignKey(pu => pu.ProjectId);
         }
     }
 }

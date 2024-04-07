@@ -67,7 +67,16 @@ namespace Taskify.DataAccess.Repositories
 
         public async Task<Guid> Update(Issue item)
         {
-            throw new NotImplementedException();
+            await _context.Issue
+                .Where(i => i.Id == item.Id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(p => p.Name, p => item.Name)
+                    .SetProperty(p => p.Description, p => item.Description)
+                    .SetProperty(p => p.Status, p => (StatusEntity)item.Status)
+                    .SetProperty(p => p.UpdatedDate, p => item.UpdatedDate)
+                    .SetProperty(p => p.TimeSpent, p => item.TimeSpent));
+
+            return item.Id;
         }
     }
 }

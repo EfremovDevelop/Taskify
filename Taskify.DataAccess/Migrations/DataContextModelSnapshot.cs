@@ -84,6 +84,47 @@ namespace Taskify.DataAccess.Migrations
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("Taskify.DataAccess.Entities.ProjectUserEntity", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectUser");
+                });
+
+            modelBuilder.Entity("Taskify.DataAccess.Entities.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Taskify.DataAccess.Entities.IssueEntity", b =>
                 {
                     b.HasOne("Taskify.DataAccess.Entities.ProjectEntity", "Project")
@@ -95,9 +136,35 @@ namespace Taskify.DataAccess.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("Taskify.DataAccess.Entities.ProjectUserEntity", b =>
+                {
+                    b.HasOne("Taskify.DataAccess.Entities.ProjectEntity", "Project")
+                        .WithMany("Users")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Taskify.DataAccess.Entities.UserEntity", "User")
+                        .WithMany("Projects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Taskify.DataAccess.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Issue");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Taskify.DataAccess.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

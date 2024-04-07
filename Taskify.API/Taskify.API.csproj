@@ -23,10 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Taskify.Application\Taskify.Application.csproj" />
     <ProjectReference Include="..\Taskify.DataAccess\Taskify.DataAccess.csproj" />
+    <ProjectReference Include="..\Taskify.Infrastructure\Taskify.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Scripts\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

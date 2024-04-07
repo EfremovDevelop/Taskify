@@ -8,6 +8,7 @@ namespace Taskify.DataAccess.Entities
         public ProjectEntity()
         {
             Issue = new HashSet<IssueEntity>();
+            Users = new HashSet<ProjectUserEntity>();
         }
         public Guid Id { get; set; }
 
@@ -20,5 +21,6 @@ namespace Taskify.DataAccess.Entities
         public DateTime CreatedDate { get; set; }
 
         public virtual ICollection<IssueEntity> Issue { get; set;}
+        public virtual ICollection<ProjectUserEntity> Users { get; set; }
     }
 }

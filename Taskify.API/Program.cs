@@ -1,15 +1,21 @@
 using System.Text.Json.Serialization;
 using Taskify.Application.Services;
 using Taskify.Core.Interfaces;
+using Taskify.Core.Interfaces.Auth;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Interfaces.Services;
 using Taskify.DataAccess;
 using Taskify.DataAccess.Data;
 using Taskify.DataAccess.Repositories;
+using Taskify.Infrastructure;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+var config = builder.Configuration;
+
+builder.Services.Configure<JwtOptions>(config.GetSection(nameof(JwtOptions)));
 
 builder.Services.AddCors(options =>
 {
@@ -32,13 +38,21 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Services
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IIssuesService, IssuesService>();
 builder.Services.AddScoped<IIssueStatusesService, IssueStatusesService>();
+builder.Services.AddScoped<UsersService>();
 
+// Auth
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IPasswordHash, PasswordHash>();
+
+// Repository
 builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 builder.Services.AddScoped<IIssueStatusesRepository, IssueStatusesRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 

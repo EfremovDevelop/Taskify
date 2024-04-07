@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Taskify.Core.Interfaces.Services;
-using Taskify.DataAccess.Entities;
 
 namespace Taskify.API.Controllers
 {
