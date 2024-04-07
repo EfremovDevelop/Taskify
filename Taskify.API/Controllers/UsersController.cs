@@ -10,27 +10,36 @@ namespace Taskify.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UsersService _usersService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersController(UsersService usersService)
+        public UsersController(UsersService usersService, IHttpContextAccessor httpContextAccessor)
         {
             _usersService = usersService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UsersRequest usersRequest)
+        public async Task<IResult> Register([FromBody] UsersRequest usersRequest)
         {
             await _usersService.Register(
                 usersRequest.UserName,
                 usersRequest.Email,
                 usersRequest.Password);
-            return Ok();
+            return Results.Ok();
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+        public async Task<IResult> Login(LoginUserRequest request)
         {
             var token = await _usersService.Login(request.Email, request.Password);
-            return Ok(token);
+
+            // Получаем контекст HTTP
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext != null)
+                httpContext.Response.Cookies.Append("qwerty", token);
+
+            return Results.Ok(token);
         }
     }
 }

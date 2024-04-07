@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using Taskify.API.Extensions;
 using Taskify.Application.Services;
 using Taskify.Core.Interfaces;
 using Taskify.Core.Interfaces.Auth;
@@ -43,6 +45,7 @@ builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IIssuesService, IssuesService>();
 builder.Services.AddScoped<IIssueStatusesService, IssueStatusesService>();
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddHttpContextAccessor();
 
 // Auth
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
@@ -54,17 +57,17 @@ builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 builder.Services.AddScoped<IIssueStatusesRepository, IssueStatusesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
+builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
+
 var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 using (var scope = app.Services.CreateScope())
 {
-    var dataContext =
-   scope.ServiceProvider.GetRequiredService<DataContext>();
+    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
     await DataContextSeed.SeedAsync(dataContext);
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -73,11 +76,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
-
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 

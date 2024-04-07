@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Taskify.API.Contracts;
 using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 
 namespace Taskify.API.Controllers
 {
+    [Authorize]
     [Route("api/projects")]
     [ApiController]
     public class ProjectsController : ControllerBase
