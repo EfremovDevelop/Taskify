@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Taskify.API.Contracts;
+using Taskify.API.Contracts.Issues;
+using Taskify.API.Contracts.Projects;
 using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 
@@ -54,7 +55,7 @@ namespace Taskify.API.Controllers
 
             var response = issues.
                 Select(i => new IssuesResponse(i.Id, i.Name, i.Description, i.TimeSpent,
-                i.Status.ToString(), i.CreatedDate, i.UpdatedDate, i.RefId));
+                i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId));
 
             return Ok(response);
         }

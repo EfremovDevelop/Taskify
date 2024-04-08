@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Taskify.Core.Enums;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Models;
 using Taskify.DataAccess.Entities;
@@ -70,7 +71,7 @@ namespace Taskify.DataAccess.Repositories
 
             var issuesByProject = issueEntitiesByProject
                 .Select(i => Issue.Create(i.Id, i.Name, i.Description,
-                i.TimeSpent, i.ProjectId, (Status)i.Status, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
+                i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
                 .ToList();
 
             return issuesByProject;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Taskify.API.Contracts;
+using Taskify.API.Contracts.Issues;
 using Taskify.Core.Interfaces.Services;
 
 namespace Taskify.API.Controllers
@@ -24,7 +24,7 @@ namespace Taskify.API.Controllers
             var response = issues
                 .Select(i => new IssuesResponse(
                     i.Id, i.Name, i.Description, i.TimeSpent,
-                    i.Status.ToString(), i.CreatedDate, i.UpdatedDate, i.RefId));
+                    i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId));
 
             return Ok(response);
         }

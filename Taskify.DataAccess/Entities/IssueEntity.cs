@@ -16,13 +16,15 @@ namespace Taskify.DataAccess.Entities
 
         public Guid ProjectId { get; set; }
 
-        public StatusEntity Status { get; set; } = StatusEntity.New;
+        public int StatusId { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
         public int RefId { get; set; }
+
+        public virtual StatusIssueEntity Status { get; set; }
 
         public virtual ProjectEntity Project { get; set; }
     }

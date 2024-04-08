@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using Taskify.Core.Enums;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Models;
 using Taskify.DataAccess.Entities;
@@ -24,7 +25,7 @@ namespace Taskify.DataAccess.Repositories
                 CreatedDate = item.CreatedDate,
                 UpdatedDate = item.UpdatedDate,
                 TimeSpent = item.TimeSpent,
-                Status = (StatusEntity)item.Status,
+                StatusId = item.StatusId,
                 ProjectId = item.ProjectId,
                 RefId = item.RefId
             };
@@ -58,7 +59,7 @@ namespace Taskify.DataAccess.Repositories
 
             var issues = issueEntities
                 .Select(i => Issue.Create(i.Id, i.Name, i.Description,
-                i.TimeSpent, i.ProjectId, (Status)i.Status, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
+                i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
                 .ToList();
 
             return issues;
@@ -72,7 +73,7 @@ namespace Taskify.DataAccess.Repositories
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(p => p.Name, p => item.Name)
                     .SetProperty(p => p.Description, p => item.Description)
-                    .SetProperty(p => p.Status, p => (StatusEntity)item.Status)
+                    .SetProperty(p => p.StatusId, p => item.StatusId)
                     .SetProperty(p => p.UpdatedDate, p => item.UpdatedDate)
                     .SetProperty(p => p.TimeSpent, p => item.TimeSpent));
 

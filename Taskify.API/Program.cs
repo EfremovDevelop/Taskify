@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using Taskify.API.Extensions;
@@ -32,7 +33,11 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddDbContext<DataContext>();
+builder.Services.AddDbContext<DataContext>(
+    options =>
+    {
+        options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+    });
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -43,7 +48,6 @@ builder.Services.AddSwaggerGen();
 // Services
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IIssuesService, IssuesService>();
-builder.Services.AddScoped<IIssueStatusesService, IssueStatusesService>();
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddHttpContextAccessor();
 
@@ -54,7 +58,6 @@ builder.Services.AddScoped<IPasswordHash, PasswordHash>();
 // Repository
 builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
-builder.Services.AddScoped<IIssueStatusesRepository, IssueStatusesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
 builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());

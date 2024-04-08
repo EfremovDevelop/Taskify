@@ -44,7 +44,7 @@ namespace Taskify.DataAccess.Data
                             CreatedDate = DateTime.Now,
                             Description = "qwerty",
                             TimeSpent = 0,
-                            Status = StatusEntity.New,
+                            StatusId = 1,
                             UpdatedDate = DateTime.Now,
                             RefId = 1,
                             ProjectId = p.Id
@@ -54,7 +54,7 @@ namespace Taskify.DataAccess.Data
                             CreatedDate = DateTime.Now,
                             Description = "qwerty",
                             TimeSpent = 0,
-                            Status = StatusEntity.New,
+                            StatusId = 1,
                             UpdatedDate = DateTime.Now,
                             RefId = 2,
                             ProjectId = p.Id
@@ -64,7 +64,7 @@ namespace Taskify.DataAccess.Data
                             CreatedDate = DateTime.Now,
                             Description = "qwerty",
                             TimeSpent = 0,
-                            Status = StatusEntity.New,
+                            StatusId = 1,
                             UpdatedDate = DateTime.Now,
                             RefId = 3,
                             ProjectId = p.Id

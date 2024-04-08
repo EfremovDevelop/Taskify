@@ -2,11 +2,6 @@
 {
     public class UserEntity
     {
-        public UserEntity()
-        {
-            Projects = new HashSet<ProjectUserEntity>();
-        }
-
         public Guid Id { get; set; }
 
         public string Name { get; set; }
@@ -15,6 +10,6 @@
 
         public string Password { get; set; }
 
-        public virtual ICollection<ProjectUserEntity> Projects { get; set; }
+        public virtual ICollection<ProjectEntity> Projects { get; set; } = [];
     }
 }
