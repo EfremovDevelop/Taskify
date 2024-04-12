@@ -20,9 +20,13 @@ namespace Taskify.DataAccess
         {
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new IssueConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectUserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+
             modelBuilder.ApplyConfiguration(new StatusIssueConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
+            modelBuilder.ApplyConfiguration(new PermissionConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
