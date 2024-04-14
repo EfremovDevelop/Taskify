@@ -1,6 +1,6 @@
 ﻿using System;
-namespace Taskify.Core.Models
-{
+namespace Taskify.Core.Models;
+
 	public class VersionIssue
 	{
 		private VersionIssue(Guid id, string version)
@@ -9,8 +9,8 @@ namespace Taskify.Core.Models
 			Version = version;
 		}
 
-        public Guid Id { get; }
-        public string Version { get; }
+    public Guid Id { get; }
+    public string Version { get; }
 
 		public static (VersionIssue, string) Create(Guid id, string version)
 		{
@@ -22,6 +22,5 @@ namespace Taskify.Core.Models
 			var versionIssue = new VersionIssue(id, version);
 
 			return (versionIssue, err);
-        }
     }
 }

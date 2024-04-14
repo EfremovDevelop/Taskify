@@ -1,17 +1,18 @@
-﻿using Taskify.Core.Models;
+﻿using Taskify.Core.Enums;
+using Taskify.Core.Models;
 
-namespace Taskify.Core.Interfaces.Repositories
+namespace Taskify.Core.Interfaces.Repositories;
+
+public interface IProjectsRepository 
 {
-    public interface IProjectsRepository 
-    {
-        Task<List<Project>> GetList();
+    Task<List<Project>> GetList();
 
-        Task<Project> GetItem(Guid id);
+    Task<Project> GetItem(Guid id);
 
-        Task<Guid> Create(Project item);
-        Task<Guid> Update(Project item);
-        Task<Guid> Delete(Guid id);
+    Task<Guid> Create(Project item);
+    Task<Guid> Update(Project item);
+    Task<Guid> Delete(Guid id);
 
-        Task<List<Issue>> GetProjectIssues(Guid projectId);
-    }
+    Task<List<Issue>> GetProjectIssues(Guid projectId);
+    Task<HashSet<Permission>> GetProjectUserPermissions(Guid userId, Guid projectId);
 }

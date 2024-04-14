@@ -1,9 +1,8 @@
 ﻿using Taskify.Core.Models;
 
-namespace Taskify.Core.Interfaces.Auth
+namespace Taskify.Core.Interfaces.Auth;
+
+public interface IJwtProvider
 {
-    public interface IJwtProvider
-    {
-        string GenerateToken(User user);
-    }
+    string GenerateToken(User user);
 }

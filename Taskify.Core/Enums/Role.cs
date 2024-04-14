@@ -1,8 +1,7 @@
-﻿namespace Taskify.Core.Enums
+﻿namespace Taskify.Core.Enums;
+
+public enum Role
 {
-    public enum Role
-    {
-        Admin = 1,
-        User = 2
-    }
+    Admin = 1,
+    User = 2
 }

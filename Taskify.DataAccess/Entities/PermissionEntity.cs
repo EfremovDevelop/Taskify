@@ -1,11 +1,10 @@
-﻿namespace Taskify.DataAccess.Entities
+﻿namespace Taskify.DataAccess.Entities;
+
+public class PermissionEntity
 {
-    public class PermissionEntity
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-        public ICollection<RoleEntity> Roles { get; set; } = [];
-    }
+    public ICollection<RoleEntity> Roles { get; set; } = [];
 }

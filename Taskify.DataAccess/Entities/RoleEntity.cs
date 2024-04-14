@@ -1,15 +1,14 @@
 ﻿using System.Security;
 
-namespace Taskify.DataAccess.Entities
+namespace Taskify.DataAccess.Entities;
+
+public class RoleEntity
 {
-    public class RoleEntity
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-        public ICollection<PermissionEntity> Permissions { get; set; } = [];
+    public ICollection<PermissionEntity> Permissions { get; set; } = [];
 
-        public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = [];
-    }
+    public ICollection<ProjectUserEntity> ProjectUsers { get; set; } = [];
 }

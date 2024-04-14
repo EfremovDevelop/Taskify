@@ -1,8 +1,7 @@
-﻿namespace Taskify.Core.Interfaces.Auth
+﻿namespace Taskify.Core.Interfaces.Auth;
+
+public interface IPasswordHash
 {
-    public interface IPasswordHash
-    {
-        string Generate(string password);
-        bool Verify(string password, string passwordHash);
-    }
+    string Generate(string password);
+    bool Verify(string password, string passwordHash);
 }

@@ -1,24 +1,23 @@
-﻿namespace Taskify.Core.Models
+﻿namespace Taskify.Core.Models;
+
+public class StatusIssue
 {
-    public class StatusIssue
+    private StatusIssue(int id, string name)
     {
-        private StatusIssue(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        Id = id;
+        Name = name;
+    }
 
-        public int Id { get; }
-        public string Name { get; }
+    public int Id { get; }
+    public string Name { get; }
 
-        public static (StatusIssue Status, string Error) Create(int id, string name)
-        {
-            //нужна валидация
-            string error = string.Empty;
+    public static (StatusIssue Status, string Error) Create(int id, string name)
+    {
+        //нужна валидация
+        string error = string.Empty;
 
-            var issue = new StatusIssue(id, name);
+        var issue = new StatusIssue(id, name);
 
-            return (issue, error);
-        }
+        return (issue, error);
     }
 }

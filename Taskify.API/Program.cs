@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using Taskify.API.Extensions;
 using Taskify.Application.Services;
-using Taskify.Core.Interfaces;
 using Taskify.Core.Interfaces.Auth;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Interfaces.Services;
@@ -19,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.Configure<JwtOptions>(config.GetSection(nameof(JwtOptions)));
+builder.Services.Configure<AuthorizationOptions>(config.GetSection(nameof(AuthorizationOptions)));
 
 builder.Services.AddCors(options =>
 {

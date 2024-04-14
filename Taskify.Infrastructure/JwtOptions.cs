@@ -1,9 +1,8 @@
-﻿namespace Taskify.Infrastructure
-{
-    public class JwtOptions
-    {
-        public string SecretKey { get; set; } = string.Empty;
+﻿namespace Taskify.Infrastructure;
 
-        public int ExpitesHours { get; set; }
-    }
+public class JwtOptions
+{
+    public string SecretKey { get; set; } = string.Empty;
+
+    public int ExpitesHours { get; set; }
 }

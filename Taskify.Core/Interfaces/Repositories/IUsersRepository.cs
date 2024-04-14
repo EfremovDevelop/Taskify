@@ -1,10 +1,9 @@
 ﻿using Taskify.Core.Models;
 
-namespace Taskify.Core.Interfaces.Repositories
+namespace Taskify.Core.Interfaces.Repositories;
+
+public interface IUsersRepository
 {
-    public interface IUsersRepository
-    {
-        Task<Guid> Create(User item);
-        Task<User> GetByEmail(string email);
-    }
+    Task<Guid> Create(User item);
+    Task<User> GetByEmail(string email);
 }

@@ -1,11 +1,10 @@
-﻿namespace Taskify.DataAccess.Entities
+﻿namespace Taskify.DataAccess.Entities;
+
+public class StatusIssueEntity
 {
-    public class StatusIssueEntity
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-        public ICollection<IssueEntity> Issues { get; set; } = [];
-    }
+    public ICollection<IssueEntity> Issues { get; set; } = [];
 }
