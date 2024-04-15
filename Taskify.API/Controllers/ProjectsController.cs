@@ -7,13 +7,12 @@ using Taskify.Core.Models;
 
 namespace Taskify.API.Controllers;
 
-//[Authorize]
+[Authorize]
 [Route("api/projects")]
 [ApiController]
 public class ProjectsController : ControllerBase
 {
     private readonly IProjectsService _projectService;
-    private readonly IAuthorizationHandler _authorizationHandler;
 
     public ProjectsController(IProjectsService projectService)
     {

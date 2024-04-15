@@ -34,13 +34,23 @@ public class UsersController : ControllerBase
     {
         var token = await _usersService.Login(request.Email, request.Password);
 
-        // Получаем контекст HTTP
         var httpContext = _httpContextAccessor.HttpContext;
 
         if (httpContext != null)
             httpContext.Response.Cookies.Append("qwerty", token);
 
         return Results.Ok(token);
+    }
+
+    [HttpPost("logoff")]
+    public IResult Logoff()
+    {
+        var httpContext = _httpContextAccessor.HttpContext;
+
+        if (httpContext != null)
+            httpContext.Response.Cookies.Delete("qwerty");
+
+        return Results.Ok("Logged off successfully");
     }
 
     [HttpGet("isAuth")]
