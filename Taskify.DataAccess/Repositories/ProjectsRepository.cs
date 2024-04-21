@@ -8,7 +8,7 @@ namespace Taskify.DataAccess.Repositories;
 
 public class ProjectsRepository : IProjectsRepository
 {
-    //protected readonly ILogger _logger;
+    // protected readonly ILogger _logger;
     private readonly DataContext _context;
     public ProjectsRepository(DataContext context)
     { 

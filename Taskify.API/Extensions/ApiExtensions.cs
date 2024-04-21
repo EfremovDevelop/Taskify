@@ -36,6 +36,11 @@ public static class ApiExtensions
                     }
                 };
             });
+
+        //services.AddSession(options =>
+        //{
+        //    options.IdleTimeout = TimeSpan.FromHours(1);
+        //});
         
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();

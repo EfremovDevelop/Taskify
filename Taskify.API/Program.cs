@@ -49,6 +49,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IIssuesService, IssuesService>();
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<IProjectUsersService, ProjectUsersService>();
 builder.Services.AddHttpContextAccessor();
 
 // Auth
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IPasswordHash, PasswordHash>();
 builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IProjectUsersRepository, ProjectUsersRepository>();
 
 builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
 
