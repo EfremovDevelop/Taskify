@@ -20,15 +20,28 @@ var config = builder.Configuration;
 builder.Services.Configure<JwtOptions>(config.GetSection(nameof(JwtOptions)));
 builder.Services.Configure<AuthorizationOptions>(config.GetSection(nameof(AuthorizationOptions)));
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//                      policy =>
+//                      {
+//                          policy.WithOrigins("http://localhost:3000")
+//                                .AllowAnyMethod()
+//                                .AllowAnyHeader()
+//                                .AllowCredentials();
+//                      });
+//});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000")
-                                .AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials();
+                          policy
+                            .SetIsOriginAllowed(origin => true) // Разрешить все источники
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
                       });
 });
 
@@ -71,7 +84,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-    await DataContextSeed.SeedAsync(dataContext);
+    //await DataContextSeed.SeedAsync(dataContext);
 }
 
 // Configure the HTTP request pipeline.
