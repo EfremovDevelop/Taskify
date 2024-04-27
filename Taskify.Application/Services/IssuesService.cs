@@ -5,12 +5,12 @@ using Taskify.Core.Models;
 namespace Taskify.Application.Services;
 
 public class IssuesService : IIssuesService
-	{
+{
     private readonly IIssuesRepository _issuesRepository;
-		public IssuesService(IIssuesRepository issueRepository)
-		{
+    public IssuesService(IIssuesRepository issueRepository)
+    {
         _issuesRepository = issueRepository;
-		}
+    }
 
     public async Task<Guid> CreateIssue(Issue issue)
     {

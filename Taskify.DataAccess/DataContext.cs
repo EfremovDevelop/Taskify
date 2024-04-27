@@ -19,6 +19,7 @@ public class DataContext(
     public virtual DbSet<RoleEntity> Role { get; set; }
     public virtual DbSet<StatusIssueEntity> StatusIssue { get; set; }
     public virtual DbSet<RolePermissionEntity> RolePermission { get; set; }
+    public virtual DbSet<IssueCommentEntity> IssueComment { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,6 +33,8 @@ public class DataContext(
         modelBuilder.ApplyConfiguration(new PermissionConfiguration());
 
         modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+
+        modelBuilder.ApplyConfiguration(new IssueCommentConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
