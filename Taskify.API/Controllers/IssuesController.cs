@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Taskify.API.Contracts.Issues;
 using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
@@ -10,10 +11,12 @@ namespace Taskify.API.Controllers;
 public class IssuesController : ControllerBase
 {
     private readonly IIssuesService _issueService;
+    private readonly IAuthorizationService _authorizationService;
 
-    public IssuesController(IIssuesService issueService)
+    public IssuesController(IIssuesService issueService, IAuthorizationService authorizationService)
     {
         _issueService = issueService;
+        _authorizationService = authorizationService;
     }
 
     // GET: api/<ProjectsController>
@@ -52,10 +55,16 @@ public class IssuesController : ControllerBase
     }
 
     [HttpGet("{id:Guid}")]
-    public async Task<ActionResult<IssuesResponse>> GetProject(Guid id)
+    public async Task<ActionResult<IssuesResponse>> GetIssue(Guid id)
     {
         var issue = await _issueService.GetIssue(id);
 
+        var authorizationResult = await _authorizationService.AuthorizeAsync(User, issue.ProjectId, "AdminPolicy");
+        // Если авторизация не прошла, возвращаем ошибку доступа
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         var response = new IssuesResponse(
             id, issue.Name, issue.Description,
             issue.TimeSpent, issue.StatusId,

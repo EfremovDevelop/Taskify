@@ -87,21 +87,4 @@ public class ProjectsRepository : IProjectsRepository
 
         return item.Id;
     }
-
-    public async Task<HashSet<Permission>> GetProjectUserPermissions(Guid userId, Guid projectId)
-    {
-        var roles = await _context.ProjectUser
-            .AsNoTracking()
-            .Include(pu => pu.Roles)
-            .ThenInclude(r => r.Permissions)
-            .Where(pu => pu.ProjectId == projectId)
-            .Select(pu => pu.Roles)
-            .ToListAsync();
-
-        return roles
-            .SelectMany(r => r)
-            .SelectMany(r => r.Permissions)
-            .Select(p => (Permission)p.Id)
-            .ToHashSet();
-    }
 }

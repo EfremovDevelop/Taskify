@@ -14,5 +14,4 @@ public interface IProjectsRepository
     Task<Guid> Delete(Guid id);
 
     Task<List<Issue>> GetProjectIssues(Guid projectId);
-    Task<HashSet<Permission>> GetProjectUserPermissions(Guid userId, Guid projectId);
 }
