@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Taskify.API.Contracts.Users;
 using Taskify.Application.Services;
 using Taskify.Infrastructure;
@@ -60,7 +59,7 @@ public class UsersController : ControllerBase
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == CustomClaims.UserId)?.Value;
             var userName = User.Claims.FirstOrDefault(c => c.Type == CustomClaims.UserName)?.Value;
-            return Ok(new {userName = userName, userId = userId});
+            return Ok(new { userName = userName, userId = userId });
         }
         else
         {

@@ -41,7 +41,10 @@ public class IssuesRepository : IIssuesRepository
 
     public async Task<Issue> GetItem(Guid id)
     {
-        throw new NotImplementedException();
+        var issueEntity = await _context.Issue.FindAsync(id);
+
+        return Issue.Create(id, issueEntity.Name, issueEntity.Description, issueEntity.TimeSpent,
+            issueEntity.ProjectId, issueEntity.StatusId, issueEntity.CreatedDate, issueEntity.UpdatedDate, issueEntity.RefId).Issue;
     }
 
     public async Task<int> GetMaxRefId(Guid projectId)

@@ -24,7 +24,13 @@ public class IssueEntity
 
     public int RefId { get; set; }
 
+    public Guid? AssignedUserId { get; set; }
+
+    public virtual ICollection<IssueCommentEntity> Comments { get; set; } = [];
+
     public virtual StatusIssueEntity Status { get; set; }
 
     public virtual ProjectEntity Project { get; set; }
+
+    public virtual UserEntity AssignedUser { get; set; }
 }

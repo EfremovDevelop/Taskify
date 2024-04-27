@@ -11,4 +11,6 @@ public class UserEntity
     public string Password { get; set; }
 
     public virtual ICollection<ProjectEntity> Projects { get; set; } = [];
+
+    public virtual ICollection<IssueCommentEntity> IssueComments { get; set; } = [];
 }

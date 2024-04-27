@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Taskify.Core.Interfaces.Services;
 
 namespace Taskify.Infrastructure;
 
@@ -40,6 +39,15 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
             {
                 // Успешно авторизован
                 Guid idfd = projectId;
+                var userId = context.User.Claims.FirstOrDefault(
+                    c => c.Type == CustomClaims.UserId);
+
+                if (userId is null || !Guid.TryParse(userId.Value, out var id))
+                {
+                    return;
+                }
+
+                using var scope = _serviceScopeFactory.CreateScope();
                 context.Succeed(requirement);
             }
         }
