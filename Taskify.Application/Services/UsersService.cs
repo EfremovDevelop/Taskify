@@ -22,6 +22,12 @@ public class UsersService
 
     public async Task Register(string userName, string email, string password)
     {
+        var existingUser = await _usersRepository.GetByEmail(email);
+        if (existingUser != null)
+        {
+            // Пользователь с таким email уже существует
+            return;
+        }
         var hashPassword = _passwordHash.Generate(password);
 
         var (user, err) = User.Create(Guid.NewGuid(), userName, email, hashPassword);
@@ -44,5 +50,10 @@ public class UsersService
         var token = _jwtProvider.GenerateToken(user);
 
         return token;
+    }
+
+    public async Task<User> GetUserByEmail(string email)
+    {
+        return await _usersRepository.GetByEmail(email);
     }
 }

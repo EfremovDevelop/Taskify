@@ -60,6 +60,16 @@ public class ProjectsController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("{projectId:Guid}")]
+    public async Task<ActionResult<IssuesResponse>> GetProject(Guid projectId)
+    {
+        var project = await _projectService.GetProject(projectId);
+
+        var response = new ProjectsResponse(project.Id, project.Name, project.Description, project.CreatedDate);
+
+        return Ok(response);
+    }
+
     [HttpPut("{id:Guid}")]
     public async Task<ActionResult<Guid>> UpdateProject(Guid id, [FromBody] ProjectsRequest request)
     {

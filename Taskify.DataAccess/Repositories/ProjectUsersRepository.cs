@@ -27,10 +27,20 @@ public class ProjectUsersRepository : IProjectUsersRepository
         await _context.Project.AddAsync(projectEntity);
         await _context.SaveChangesAsync();
 
+        return await AddParticipant(userId, projectEntity.Id, Core.Enums.Role.Admin);
+    }
+
+    public async Task<Guid> AddParticipant(Guid userId, Guid projectId, Core.Enums.Role role)
+    {
+        var roleEntity = await _context.Role
+            .SingleOrDefaultAsync(r => r.Id == (int)role)
+            ?? throw new InvalidOperationException();
+        
         var projectUserEntity = new ProjectUserEntity
         {
             UserId = userId,
-            ProjectId = projectEntity.Id
+            ProjectId = projectId,
+            Roles = [roleEntity]
         };
 
         await _context.ProjectUser.AddAsync(projectUserEntity);
@@ -78,5 +88,52 @@ public class ProjectUsersRepository : IProjectUsersRepository
             .SelectMany(r => r.Permissions)
             .Select(p => (Permission)p.Id)
             .ToHashSet();
+    }
+
+    public async Task<List<User>> GetProjectUsers(Guid projectId)
+    {
+        var userEntityIds = await _context.ProjectUser
+            .AsNoTracking()
+            .Where(pu => pu.ProjectId == projectId)
+            .Select(pu => pu.UserId)
+            .ToListAsync();
+        var userEntities = await _context.User
+            .AsNoTracking()
+            .Where(u => userEntityIds.Contains(u.Id))
+            .ToListAsync();
+
+        var users = userEntities
+            .Select(u => User.Create(u.Id, u.Name, u.Email, u.Password).user)
+            .ToList();
+
+        return users;
+    }
+
+    public async Task<ProjectUser> GetProjectUser(Guid userId, Guid projectId)
+    {
+        var userEntity = await _context.User
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId);
+        if (userEntity == null)
+        {
+            throw new Exception("No User data");
+        }
+        var projectUserEntity = await _context.ProjectUser
+            .Include(pu => pu.Roles)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.ProjectId == projectId && u.UserId == userId);
+
+        if (projectUserEntity == null)
+        {
+            throw new Exception("No ProjectUser data");
+        }
+
+        var roleEntity = projectUserEntity.Roles.FirstOrDefault(); // пока что будет одна роль
+
+        var role = Core.Models.Role.Create(roleEntity.Id, roleEntity.Name).Role;
+
+        var projectUser = ProjectUser.Create(userId, userEntity.Name, userEntity.Email, role).ProjectUser;
+
+        return projectUser;
     }
 }

@@ -22,4 +22,19 @@ public class ProjectUsersService : IProjectUsersService
     {
         return await _projectUserRepository.GetUserProjects(userId);
     }
+
+    public async Task<List<User>> GetProjectUsers(Guid projectId)
+    {
+        return await _projectUserRepository.GetProjectUsers(projectId);
+    }
+
+    public async Task<ProjectUser> GetProjectUser(Guid userId, Guid projectId)
+    {
+        return await _projectUserRepository.GetProjectUser(userId, projectId);
+    }
+
+    public async Task<Guid> AddParticipant(Guid userId, Guid projectId, Core.Enums.Role role)
+    {
+        return await _projectUserRepository.AddParticipant(userId, projectId, role);
+    }
 }

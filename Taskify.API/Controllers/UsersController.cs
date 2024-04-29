@@ -29,7 +29,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IResult> Login(LoginUserRequest request)
+    public async Task<ActionResult<UsersResponse>> Login(LoginUserRequest request)
     {
         var token = await _usersService.Login(request.Email, request.Password);
 
@@ -38,7 +38,11 @@ public class UsersController : ControllerBase
         if (httpContext != null)
             httpContext.Response.Cookies.Append("qwerty", token);
 
-        return Results.Ok(token);
+        var user = await _usersService.GetUserByEmail(request.Email);
+
+        var response = new UsersResponse(user.Id, user.Name, user.Email);
+
+        return Ok(response);
     }
 
     [HttpPost("logoff")]
