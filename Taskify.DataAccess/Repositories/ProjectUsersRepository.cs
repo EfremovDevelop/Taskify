@@ -90,23 +90,35 @@ public class ProjectUsersRepository : IProjectUsersRepository
             .ToHashSet();
     }
 
-    public async Task<List<User>> GetProjectUsers(Guid projectId)
+    public async Task<List<ProjectUser>> GetProjectUsers(Guid projectId)
     {
-        var userEntityIds = await _context.ProjectUser
+        var projectUsers = await _context.ProjectUser
+            .Include(pu => pu.Roles)
             .AsNoTracking()
             .Where(pu => pu.ProjectId == projectId)
-            .Select(pu => pu.UserId)
-            .ToListAsync();
-        var userEntities = await _context.User
-            .AsNoTracking()
-            .Where(u => userEntityIds.Contains(u.Id))
             .ToListAsync();
 
-        var users = userEntities
-            .Select(u => User.Create(u.Id, u.Name, u.Email, u.Password).user)
-            .ToList();
+        var usersWithRoles = new List<ProjectUser>();
 
-        return users;
+        foreach (var pu in projectUsers)
+        {
+            var userEntity = await _context.User
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == pu.UserId);
+
+            if (userEntity != null)
+            {
+                var roleEntity = pu.Roles.FirstOrDefault(); // предполагается, что у пользователя может быть только одна роль
+                var role = Core.Models.Role.Create(roleEntity.Id, roleEntity.Name).Role;
+
+                var projectUser = ProjectUser.Create(userEntity.Id,
+                    userEntity.Name, userEntity.Email, role).ProjectUser;
+
+                usersWithRoles.Add(projectUser);
+            }
+        }
+
+        return usersWithRoles;
     }
 
     public async Task<ProjectUser> GetProjectUser(Guid userId, Guid projectId)

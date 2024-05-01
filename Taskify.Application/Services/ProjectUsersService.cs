@@ -23,7 +23,7 @@ public class ProjectUsersService : IProjectUsersService
         return await _projectUserRepository.GetUserProjects(userId);
     }
 
-    public async Task<List<User>> GetProjectUsers(Guid projectId)
+    public async Task<List<ProjectUser>> GetProjectUsers(Guid projectId)
     {
         return await _projectUserRepository.GetProjectUsers(projectId);
     }

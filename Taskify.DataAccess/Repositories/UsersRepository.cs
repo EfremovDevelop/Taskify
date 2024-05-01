@@ -31,7 +31,12 @@ public class UsersRepository : IUsersRepository
     {
         var userEntity = await _context.User
             .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Email == email) ?? throw new Exception();
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        if (userEntity == null)
+        {
+            return null;
+        }
 
         var (user, err) = User.Create(
             userEntity.Id,

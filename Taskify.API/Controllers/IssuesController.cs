@@ -6,6 +6,7 @@ using Taskify.Core.Models;
 
 namespace Taskify.API.Controllers;
 
+[Authorize]
 [Route("api/issues")]
 [ApiController]
 public class IssuesController : ControllerBase

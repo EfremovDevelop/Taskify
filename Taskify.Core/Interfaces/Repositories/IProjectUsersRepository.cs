@@ -9,6 +9,6 @@ public interface IProjectUsersRepository
     Task<Guid> CreateUserProject(Guid userId, Project project);
     Task<ProjectUser> GetProjectUser(Guid userId, Guid projectId);
     Task<HashSet<Permission>> GetProjectUserPermissions(Guid userId, Guid projectId);
-    Task<List<User>> GetProjectUsers(Guid projectId);
+    Task<List<ProjectUser>> GetProjectUsers(Guid projectId);
     Task<List<Project>> GetUserProjects(Guid userId);
 }

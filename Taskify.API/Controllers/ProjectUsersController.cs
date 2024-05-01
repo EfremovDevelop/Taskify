@@ -24,7 +24,7 @@ public class ProjectUsersController : ControllerBase
         var users = await _projectUsersService.GetProjectUsers(projectId);
 
         var response = users
-            .Select(u => new UsersResponse(u.Id, u.Name, u.Email));
+            .Select(u => new ProjectUserResponse(u.Id,projectId, u.Name, u.Email, u.Role));
 
         return Ok(response);
     }
