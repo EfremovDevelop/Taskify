@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Taskify.API.Contracts.Users;
 using Taskify.Application.Services;
-using Taskify.Core.Enums;
 using Taskify.Core.Interfaces.Services;
-using Taskify.Core.Models;
 
 namespace Taskify.API.Controllers
 {

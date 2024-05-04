@@ -46,4 +46,13 @@ public class UsersRepository : IUsersRepository
 
         return user;
     }
+
+    public async Task<User?> GetById(Guid? id)
+    {
+        var userEntity = await _context.User.FindAsync(id);
+
+        var user = User.Create(userEntity.Id, userEntity.Name, userEntity.Email, userEntity.Password).user;
+
+        return user;
+    }
 }

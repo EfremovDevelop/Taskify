@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskify.API.Contracts.Issues;
+using Taskify.Application.Services;
 using Taskify.Core.Interfaces.Services;
 using Taskify.Core.Models;
 
@@ -13,30 +14,25 @@ public class IssuesController : ControllerBase
 {
     private readonly IIssuesService _issueService;
     private readonly IAuthorizationService _authorizationService;
+    private readonly UsersService _usersService;
 
-    public IssuesController(IIssuesService issueService, IAuthorizationService authorizationService)
+    public IssuesController(IIssuesService issueService, IAuthorizationService authorizationService, UsersService usersService)
     {
         _issueService = issueService;
         _authorizationService = authorizationService;
+        _usersService = usersService;
     }
 
     // GET: api/<ProjectsController>
-    [HttpGet]
-    public async Task<ActionResult<IssuesResponse>> GetAllIssues()
-    {
-        var issues = await _issueService.GetAllIssues();
-
-        var response = issues
-            .Select(i => new IssuesResponse(
-                i.Id, i.Name, i.Description, i.TimeSpent,
-                i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId));
-
-        return Ok(response);
-    }
 
     [HttpPost]
     public async Task<ActionResult<Guid>> CreateIssue([FromBody] IssuesRequest request)
     {
+        var authorizationResult = await _authorizationService.AuthorizeAsync(User, request.ProjectId, "AdminPolicy");
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
+        }
         var (issue, err) = Issue.Create(
             Guid.NewGuid(),
             request.Name,
@@ -46,7 +42,8 @@ public class IssuesController : ControllerBase
             request.StatusId,
             DateTime.UtcNow,
             DateTime.UtcNow,
-            0);
+            0,
+            request.AssignedId);
 
         if (!string.IsNullOrEmpty(err))
             return BadRequest(err);
@@ -66,10 +63,21 @@ public class IssuesController : ControllerBase
         {
             return Forbid();
         }
-        var response = new IssuesResponse(
+        string? name = null;
+
+        if (issue.AssignedUserId != null)
+        {
+            var user = await _usersService.GetUserById(issue.AssignedUserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            name = user.Name;
+        }
+        var response = new IssuesWirhAssignedResponse(
             id, issue.Name, issue.Description,
             issue.TimeSpent, issue.StatusId,
-            issue.CreatedDate, issue.UpdatedDate, issue.RefId);
+            issue.CreatedDate, issue.UpdatedDate, issue.RefId, name);
 
         return Ok(response);
     }

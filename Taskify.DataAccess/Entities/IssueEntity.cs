@@ -32,5 +32,5 @@ public class IssueEntity
 
     public virtual ProjectEntity Project { get; set; }
 
-    public virtual UserEntity AssignedUser { get; set; }
+    public virtual UserEntity? AssignedUser { get; set; }
 }

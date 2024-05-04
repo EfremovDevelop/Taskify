@@ -71,7 +71,7 @@ public class ProjectsRepository : IProjectsRepository
 
         var issuesByProject = issueEntitiesByProject
             .Select(i => Issue.Create(i.Id, i.Name, i.Description,
-            i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
+            i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId, i.AssignedUserId).Issue)
             .ToList();
 
         return issuesByProject;

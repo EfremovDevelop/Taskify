@@ -6,7 +6,7 @@ public class Issue
 {
     public const int MAX_NAME_LENGTH = 100;
     private Issue(Guid id, string name, string description, float timeSpent, Guid projectId,
-        int statusId, DateTime createdDate, DateTime updateDate, int refId) 
+        int statusId, DateTime createdDate, DateTime updateDate, int refId, Guid? assignedUserId) 
     {
         Id = id;
         Name = name;
@@ -17,6 +17,7 @@ public class Issue
         CreatedDate = createdDate;
         UpdatedDate = updateDate;
         RefId = refId;
+        AssignedUserId = assignedUserId;
     }
 
     public Guid Id { get; }
@@ -26,12 +27,13 @@ public class Issue
     public Guid ProjectId { get; }
     public int StatusId { get; }
     public int RefId { get; }
+    public Guid? AssignedUserId { get; set; }
 
     public DateTime CreatedDate { get; }
     public DateTime UpdatedDate { get; }
 
     public static (Issue Issue, string Error) Create(Guid id, string name, string description, float timeSpent, Guid projectId,
-        int statusId, DateTime createdDate, DateTime updateDate, int RefId)
+        int statusId, DateTime createdDate, DateTime updateDate, int RefId, Guid? assignedUserId)
     {
         string error = string.Empty;
         if (string.IsNullOrEmpty(name))
@@ -41,7 +43,7 @@ public class Issue
         else if (timeSpent < 0)
             error = "Error. TimeSpent can not be < 0";
 
-        Issue issue = new Issue(id, name, description, timeSpent, projectId, statusId, createdDate, updateDate, RefId);
+        Issue issue = new Issue(id, name, description, timeSpent, projectId, statusId, createdDate, updateDate, RefId, assignedUserId);
 
         return (issue, error);
     }

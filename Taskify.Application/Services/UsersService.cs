@@ -56,4 +56,11 @@ public class UsersService
     {
         return await _usersRepository.GetByEmail(email);
     }
+
+    public async Task<User?> GetUserById(Guid? id)
+    {
+        if (id == null)
+            return null;
+        return await _usersRepository.GetById(id);
+    }
 }

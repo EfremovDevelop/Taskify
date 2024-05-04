@@ -27,7 +27,8 @@ public class IssuesRepository : IIssuesRepository
             TimeSpent = item.TimeSpent,
             StatusId = item.StatusId,
             ProjectId = item.ProjectId,
-            RefId = item.RefId
+            RefId = item.RefId,
+            AssignedUserId = item.AssignedUserId
         };
         await _context.Issue.AddAsync(issueEntity);
         await _context.SaveChangesAsync();
@@ -44,7 +45,7 @@ public class IssuesRepository : IIssuesRepository
         var issueEntity = await _context.Issue.FindAsync(id);
 
         return Issue.Create(id, issueEntity.Name, issueEntity.Description, issueEntity.TimeSpent,
-            issueEntity.ProjectId, issueEntity.StatusId, issueEntity.CreatedDate, issueEntity.UpdatedDate, issueEntity.RefId).Issue;
+            issueEntity.ProjectId, issueEntity.StatusId, issueEntity.CreatedDate, issueEntity.UpdatedDate, issueEntity.RefId, issueEntity.AssignedUserId).Issue;
     }
 
     public async Task<int> GetMaxRefId(Guid projectId)
@@ -62,7 +63,7 @@ public class IssuesRepository : IIssuesRepository
 
         var issues = issueEntities
             .Select(i => Issue.Create(i.Id, i.Name, i.Description,
-            i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId).Issue)
+            i.TimeSpent, i.ProjectId, i.StatusId, i.CreatedDate, i.UpdatedDate, i.RefId, i.AssignedUserId).Issue)
             .ToList();
 
         return issues;
