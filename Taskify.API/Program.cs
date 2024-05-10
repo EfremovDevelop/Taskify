@@ -63,6 +63,8 @@ builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IIssuesService, IssuesService>();
 builder.Services.AddScoped<UsersService>();
 builder.Services.AddScoped<IProjectUsersService, ProjectUsersService>();
+builder.Services.AddScoped<IIssueCommentsService, IssueCommentsService>();
+
 builder.Services.AddHttpContextAccessor();
 
 // Auth
@@ -74,6 +76,7 @@ builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddScoped<IIssuesRepository, IssuesRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IProjectUsersRepository, ProjectUsersRepository>();
+builder.Services.AddScoped<IIssueCommentsRepository, IssueCommentsRepository>();
 
 builder.Services.AddApiAuthentication(builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>());
 

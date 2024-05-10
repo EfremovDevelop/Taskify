@@ -42,4 +42,3 @@ public class IssuesService : IIssuesService
         return await _issuesRepository.GetList();
     }
 }
-

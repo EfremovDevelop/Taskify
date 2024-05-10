@@ -77,9 +77,24 @@ public class IssuesController : ControllerBase
         var response = new IssuesWirhAssignedResponse(
             id, issue.Name, issue.Description,
             issue.TimeSpent, issue.StatusId,
-            issue.CreatedDate, issue.UpdatedDate, issue.RefId, name);
+            issue.CreatedDate, issue.UpdatedDate, issue.RefId, name, issue.ProjectId,
+            issue.AssignedUserId);
 
         return Ok(response);
+    }
+
+    [HttpPut("{id:Guid}")]
+    public async Task<IActionResult> UpdateIssue(Guid id, [FromBody] IssuesRequest issueUpdate)
+    {
+        var issueEntity = await _issueService.GetIssue(id);
+        var issue = Issue.Create(issueEntity.Id,
+            issueUpdate.Name, issueUpdate.Description,
+            issueUpdate.TimeSpent, issueEntity.ProjectId, issueUpdate.StatusId,
+            issueEntity.CreatedDate, DateTime.UtcNow, issueEntity.RefId, issueUpdate.AssignedId).Issue;
+
+        await _issueService.UpdateIssue(issue);
+
+        return Ok(issue);
     }
 }
 

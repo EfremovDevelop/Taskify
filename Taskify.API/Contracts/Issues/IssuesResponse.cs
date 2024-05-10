@@ -1,4 +1,6 @@
-﻿namespace Taskify.API.Contracts.Issues;
+﻿using Taskify.API.Contracts.Users;
+
+namespace Taskify.API.Contracts.Issues;
 
 public record IssuesResponse(Guid Id,
     string Name, string Description, float TimeSpent,
@@ -6,4 +8,5 @@ public record IssuesResponse(Guid Id,
 
 public record IssuesWirhAssignedResponse(Guid Id,
     string Name, string Description, float TimeSpent,
-        int StatusId, DateTime CreatedDate, DateTime UpdateDate, int RefId, string? AssignedUserName);
+        int StatusId, DateTime CreatedDate, DateTime UpdateDate, int RefId, string? AssignedUserName,
+        Guid projectId, Guid? assignedUserId);

@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using Taskify.Core.Enums;
 using Taskify.Core.Interfaces.Repositories;
 using Taskify.Core.Models;
 using Taskify.DataAccess.Entities;
@@ -10,10 +8,10 @@ namespace Taskify.DataAccess.Repositories;
 public class IssuesRepository : IIssuesRepository
 {
     private readonly DataContext _context;
-		public IssuesRepository(DataContext context)
-		{
+    public IssuesRepository(DataContext context)
+    {
         _context = context;
-		}
+    }
 
     public async Task<Guid> Create(Issue item)
     {
@@ -80,8 +78,7 @@ public class IssuesRepository : IIssuesRepository
                 .SetProperty(p => p.StatusId, p => item.StatusId)
                 .SetProperty(p => p.UpdatedDate, p => item.UpdatedDate)
                 .SetProperty(p => p.TimeSpent, p => item.TimeSpent));
-
+        await _context.SaveChangesAsync();
         return item.Id;
     }
 }
-
